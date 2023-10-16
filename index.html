@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <base href="https://kosinix.github.io/filipino-name-generator/" /> -->
+    <base href="http://127.0.0.1:9201" />
+    <meta property="og:url" content="https://kosinix.github.io/filipino-name-generator/" />
+    <meta property="og:title" content="Filipino Name Generator" />
+    <meta property="og:description" content="Filipino Name Generator" />
+    <meta property="og:image" content="https://kosinix.github.io/filipino-name-generator/images/preview.png" />
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Filipino Name Generator</title>
+</head>
+
+<body class="bg-light">
+    <div id="vApp" v-cloak class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h1">Filipino Name Generator</h1>
+                <p>Generate male and female Filipino names.</p>
+                <p>Format is <em>lastName</em>, <em>firstName1</em> <em>[firstName2]</em>, <em>middleName</em></p>
+                <form @submit.prevent="onSubmit($event)" action="">
+                    <div class="text-center mb-4">
+                        <button class="btn btn-primary">Generate</button>
+                    </div>
+                    <hr>
+                    <div v-if="results" class="row">
+                        <div class="col-md-6" style="color: #994755;">
+                            <h6 class="h6">Female</h6>
+                            <pre style="color: #994755;">${results}</pre>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="h6">Male</h6>
+                            <pre>${results2}</pre>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/data.js"></script>
+
+    <script>
+        function shuffle(array) {
+            var m = array.length, t, i;
+            // While there remain elements to shuffle…
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+            return array;
+        }
+
+        
+        function generateFemaleNames (){
+            var femaleNames = []
+            var lastNamesRnd = shuffle([...lastNames]) // [...lastNames] is to copy-by-value (clone) the array
+            var middleNamesRnd = shuffle([...lastNames])
+            var firstNamesFemaleRnd1 = shuffle([...femaleFirstNames])
+            var firstNamesFemaleRnd2 = shuffle([...femaleFirstNames])
+
+            for (let x = 0; x < lastNamesRnd.length; x++) {
+                if (!lastNamesRnd[x]) {
+                    break
+                }
+                if (!firstNamesFemaleRnd1[x]) {
+                    break
+                }
+
+                if (Math.round(Math.random())) {
+                    femaleNames.push(`${lastNamesRnd[x]}, ${firstNamesFemaleRnd1[x]}, ${middleNamesRnd[x]}`)
+
+                } else {
+                    femaleNames.push(`${lastNamesRnd[x]}, ${firstNamesFemaleRnd1[x]} ${firstNamesFemaleRnd2[x]}, ${middleNamesRnd[x]}`)
+
+                }
+            }
+            return femaleNames
+
+        }
+
+        function generateMaleNames (){
+            var maleNames = []
+            var lastNamesRnd = shuffle([...lastNames]) // [...lastNames] is to copy-by-value (clone) the array
+            var middleNamesRnd = shuffle([...lastNames])
+            var firstNamesMaleRnd1 = shuffle([...maleFirstNames])
+            var firstNamesMaleRnd2 = shuffle([...maleFirstNames])
+
+            for (let x = 0; x < lastNamesRnd.length; x++) {
+                if (!lastNamesRnd[x]) {
+                    break
+                }
+                if (!firstNamesMaleRnd1[x]) {
+                    break
+                }
+
+                if (Math.round(Math.random())) {
+                    maleNames.push(`${lastNamesRnd[x]}, ${firstNamesMaleRnd1[x]}, ${middleNamesRnd[x]}`)
+                } else {
+                    maleNames.push(`${lastNamesRnd[x]}, ${firstNamesMaleRnd1[x]} ${firstNamesMaleRnd2[x]}, ${middleNamesRnd[x]}`)
+                }
+            }
+            return maleNames
+
+        }
+
+        var vApp = new Vue({
+            el: '#vApp',
+            delimiters: ["${", "}"],
+            mixins: [
+            ],
+            data: {
+                results: '',
+                results2: '',
+            },
+            mounted: function () {
+            },
+            methods: {
+                onSubmit: function () {
+                    this.results = generateFemaleNames().join("\n")
+                    this.results2 = generateMaleNames().join("\n")
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
