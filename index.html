@@ -21,12 +21,22 @@
     <div id="vApp" v-cloak class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="h1">Filipino Name Generator</h1>
-                <p>Generate male and female Filipino names.</p>
+                <h1 class="h2">Filipino Name Generator</h1>
+                <p>Generate male and female Filipino names from predefined list of names.</p>
                 <p>Format is <em>lastName</em>, <em>firstName1</em> <em>[firstName2]</em>, <em>middleName</em></p>
                 <form @submit.prevent="onSubmit($event)" action="">
                     <div class="text-center mb-4">
-                        <button class="btn btn-primary">Generate</button>
+                        <button class="btn btn-primary">Generate Random Names</button>
+                    </div>
+                    <div style="font-size: 12px; font-style: italic; display: flex;">
+                        <div>
+                            <div>Sources:</div>
+                            <ul>
+                                <li><a href="https://github.com/jkga/katalog">The Catálogo alfabético de apellidos (English: Alphabetical Catalogue of Surnames)</a></li>
+                                <li><a href="https://gist.github.com/robustdj/667450">Boy Names</a></li>
+                                <li><a href="https://gist.github.com/charneykaye/15ec7fc91bd0e8621604969fbd2e13c7">charneykaye/names-filipino-feminine.csv</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <hr>
                     <div v-if="results" class="row">
